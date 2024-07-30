@@ -37,4 +37,9 @@ To run the tests, use the following command:
 ```sh
 anchor test
 
+## Code Structure
+- `src/lib.rs`: Main contract logic
+- `tests/presale_tests.rs`: Unit tests
+
+
 
