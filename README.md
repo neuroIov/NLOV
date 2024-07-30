@@ -13,4 +13,28 @@ It includes functionalities for initializing a presale, contributing to the pres
 - Withdraw contributed funds
 
 ## Getting Started
-To get started with this project, follow the instructions in the `docs/installation.md` file.
+To get started with this project, follow the instructions: 
+
+## Prerequisites
+- Rust
+- Solana CLI
+- Anchor CLI
+
+## Steps
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/yourusername/my_presale_project.git
+    cd my_presale_project
+    ```
+
+2. Install dependencies:
+    ```sh
+    anchor build
+    ```
+
+## Running Tests
+To run the tests, use the following command:
+```sh
+anchor test
+
+
