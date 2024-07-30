@@ -15,7 +15,7 @@ mod tests {
         let payer = Pubkey::new_unique();
 
         let mut program = ProgramTest::new(
-            "nlov", // program name
+            "nlov", // program 
             program_id,
             processor!(process_instruction),
         );
