@@ -20,7 +20,7 @@ Total Funds to be Raised:
 - Public: $4,200,000
 Total: $4,875,000
 
-This shows a gradual valuation increase from:
+A gradual valuation increase from:
 - $20M (Seed) → $25M (Presale) → $30M (Public)
 
 The price appreciation between rounds is:
