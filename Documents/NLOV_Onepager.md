@@ -52,4 +52,4 @@ Sale Rounds:        18% (Varied vesting)
 - Anti-dump mechanisms
 - Liquidity locks
 
-For detailed information: [www.neurolov.com/tokenomics]
+For detailed information: [www.tokenomics.neurolov.ai]
