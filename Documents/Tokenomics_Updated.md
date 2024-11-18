@@ -1,7 +1,7 @@
 | Tokenomics | Timeline | Token Price | Slot size (%) | Slot size (Tokens) | Slot Size(M) | Cliff | Vesting | Raise | TGE % | TGE Circulating Supply |
 |------------|-----------|--------------|---------------|------------------|--------------|--------|-----------|--------|---------|----------------------|
 | Seed Sale | Q4 2024 | $0.04 | 2% | 10,000,000 | 10 Million | 3 months | 5% at TGE, then linear vesting over 12 months | $400,000 | 5% | 500,000 |
-| Private Sale | Q4 2024 | $0.05 | 5% | 25,000,000 | 25 Million | 2 months | 8% at TGE, then linear vesting over 10 months | $1,250,000 | 8% | 2,000,000 |
+| Private Sale | Q1 2024 | $0.05 | 5% | 25,000,000 | 25 Million | 2 months | 8% at TGE, then linear vesting over 10 months | $1,250,000 | 8% | 2,000,000 |
 | Presale | Q1 2025 | $0.06 | 4% | 20,000,000 | 20 Million | None | 10% at TGE, then linear vesting over 8 months | $1,200,000 | 10% | 2,000,000 |
 | Public Sale | Q1 2025 | $0.07 | 7% | 35,000,000 | 35 Million | None | 15% at TGE, then linear vesting over 6 months | $1,450,000 | 15% | 5,250,000 |
 | CEX Listings | Q2 2025 | - | 5% | 25,000,000 | 25 Million | 1 month | Based on exchange requirements | - | - | - |
