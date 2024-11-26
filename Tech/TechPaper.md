@@ -422,4 +422,171 @@ class ProofOfComputation {
 }
 ```
 
+# 4. Security Architecture
 
+## 4.1 Multi-Layer Security Model
+
+```mermaid
+graph TB
+    subgraph Security Layers
+        A[Network Security] --> B[Node Validation]
+        A --> C[Data Protection]
+        A --> D[Smart Contract Security]
+        
+        B --> E[ZK Proofs]
+        B --> F[Reputation System]
+        
+        C --> G[E2E Encryption]
+        C --> H[Secure Enclaves]
+        
+        D --> I[Multi-sig]
+        D --> J[Time Locks]
+    end
+```
+
+### Node Validation Protocol
+
+```typescript
+class NodeValidator {
+  async validateNode(
+    nodeId: string, 
+    capabilities: NodeCapabilities
+  ): Promise<ValidationResult> {
+    // Hardware validation through WebGPU
+    const gpuValidation = await this.validateGPUCapabilities(capabilities.gpu);
+    
+    // Network performance verification
+    const networkMetrics = await this.measureNetworkPerformance(nodeId);
+    
+    // Proof of stake verification
+    const stakeVerification = await this.verifyStake(nodeId);
+    
+    // Generate zero-knowledge proof of capabilities
+    const zkProof = await this.generateCapabilityProof({
+      gpuValidation,
+      networkMetrics,
+      stakeVerification
+    });
+    
+    return {
+      isValid: this.checkAllValidations([
+        gpuValidation,
+        networkMetrics,
+        stakeVerification
+      ]),
+      proof: zkProof,
+      metrics: {
+        performance: gpuValidation.metrics,
+        network: networkMetrics,
+        stake: stakeVerification.amount
+      }
+    };
+  }
+}
+```
+
+## 4.2 Security Protocol Specifications
+
+### Encryption Protocol
+
+```typescript
+interface EncryptionProtocol {
+  // Key derivation function
+  kdf(secret: Uint8Array, salt: Uint8Array): Promise<CryptoKey> {
+    return crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: salt,
+        iterations: 100000,
+        hash: 'SHA-256'
+      },
+      secret,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }
+
+  // Task data encryption
+  async encryptTaskData(
+    data: Uint8Array, 
+    nodePublicKey: CryptoKey
+  ): Promise<EncryptedData> {
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const encryptionKey = await this.kdf(
+      await crypto.subtle.exportKey('raw', nodePublicKey),
+      iv
+    );
+    
+    const encryptedData = await crypto.subtle.encrypt(
+      { name: 'AES-GCM', iv },
+      encryptionKey,
+      data
+    );
+    
+    return {
+      data: new Uint8Array(encryptedData),
+      iv,
+      ephemeralPublicKey: await this.generateEphemeralKey()
+    };
+  }
+}
+```
+
+# 5. Performance Metrics & Benchmarking
+
+## 5.1 System Performance Model
+
+The system's overall performance is modeled using the following equations:
+
+### Network Performance
+$$T_{network} = \sum_{i=1}^{n} \frac{D_i}{B_i} + L_i$$
+
+Where:
+- $D_i$ = Data size for node i
+- $B_i$ = Available bandwidth
+- $L_i$ = Network latency
+
+### Computation Efficiency
+$$E_{compute} = \frac{\sum_{i=1}^{n} C_i \cdot U_i}{\sum_{i=1}^{n} C_i}$$
+
+Where:
+- $C_i$ = Compute capacity of node i
+- $U_i$ = Utilization factor
+
+## 5.2 Benchmark Implementation
+
+```typescript
+class PerformanceBenchmark {
+  async runBenchmark(): Promise<BenchmarkResults> {
+    const results: BenchmarkMetric[] = [];
+    
+    // Test computation performance
+    const computeMetrics = await this.benchmarkCompute({
+      iterations: 1000,
+      dataSize: [1e6, 1e7, 1e8],
+      parallel: true
+    });
+    
+    // Test network performance
+    const networkMetrics = await this.benchmarkNetwork({
+      packetSize: [1024, 10240, 102400],
+      nodes: this.getActiveNodes(),
+      protocol: ['tcp', 'udp']
+    });
+    
+    // Test storage performance
+    const storageMetrics = await this.benchmarkStorage({
+      operations: ['read', 'write', 'delete'],
+      dataSize: [1e6, 1e7, 1e8],
+      redundancy: [1, 2, 3]
+    });
+    
+    return this.analyzeResults([
+      computeMetrics,
+      networkMetrics,
+      storageMetrics
+    ]);
+  }
+}
+```
