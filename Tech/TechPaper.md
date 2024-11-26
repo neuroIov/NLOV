@@ -230,3 +230,196 @@ Where:
 - $L$ = Latency factor
 - $w_1,w_2,w_3,w_4$ = Weight coefficients
 
+# 3. Core Technical Components
+
+## 3.1 Resource Management System
+
+```mermaid
+graph TB
+    subgraph Resource Allocation
+        A[Task Submission] --> B{Resource Check}
+        B -->|Available| C[Immediate Allocation]
+        B -->|Limited| D[Queue Management]
+        B -->|None| E[Wait Pool]
+        
+        C --> F[Execution]
+        D --> G[Priority Processing]
+        E --> H[Resource Monitor]
+        
+        H -->|Resources Free| B
+    end
+```
+
+### Resource Allocation Algorithm
+
+```typescript
+interface ResourceRequirements {
+  minGPUMemory: number;
+  computePower: number;
+  expectedDuration: number;
+  priority: number;
+}
+
+class ResourceAllocator {
+  private nodes: Map<string, NodeStatus>;
+  private taskQueue: PriorityQueue<ComputeTask>;
+  
+  async allocateResources(task: ComputeTask): Promise<AllocationResult> {
+    const requirements = this.analyzeRequirements(task);
+    const availableNodes = await this.findEligibleNodes(requirements);
+    
+    if (availableNodes.length === 0) {
+      return this.handleResourceScarcity(task);
+    }
+    
+    const allocation = this.optimizeAllocation(availableNodes, requirements);
+    await this.validateAndReserve(allocation);
+    
+    return this.finalizeAllocation(allocation);
+  }
+
+  private calculateNodeScore(node: NodeStatus, requirements: ResourceRequirements): number {
+    const performanceScore = this.calculatePerformanceScore(node, requirements);
+    const reliabilityScore = this.calculateReliabilityScore(node);
+    const costScore = this.calculateCostEfficiencyScore(node);
+    const latencyScore = this.calculateLatencyScore(node);
+    
+    return performanceScore * 0.4 + 
+           reliabilityScore * 0.3 + 
+           costScore * 0.2 + 
+           latencyScore * 0.1;
+  }
+}
+```
+
+## 3.2 TON Network Integration
+
+### Task Distribution System
+
+```typescript
+interface TONTaskDistribution {
+  async distributeTask(task: ComputeTask): Promise<TaskDistributionResult> {
+    // Create TON message for task distribution
+    const message = await this.createTaskMessage(task);
+    
+    // Find optimal routing path
+    const routingPath = await this.calculateOptimalRoute(task.requirements);
+    
+    // Distribute via TON network
+    const distribution = await this.ton.sendMessage({
+      to: routingPath.targetWorkchain,
+      value: task.bounty,
+      payload: message,
+      route: routingPath
+    });
+    
+    return this.monitorDistribution(distribution.id);
+  }
+}
+```
+
+### Cross-Chain Message Protocol
+
+```solidity
+contract CrossChainBridge {
+    struct MessagePayload {
+        bytes32 taskId;
+        address sourceChain;
+        address targetChain;
+        uint256 value;
+        bytes data;
+    }
+    
+    function sendCrossChainMessage(
+        MessagePayload memory payload
+    ) external payable {
+        require(msg.value >= calculateFee(payload), "Insufficient fee");
+        
+        bytes memory message = abi.encode(
+            payload.taskId,
+            payload.sourceChain,
+            payload.targetChain,
+            payload.value,
+            payload.data
+        );
+        
+        emit MessageSent(payload.taskId, message);
+        _processCrossChainTransfer(payload);
+    }
+}
+```
+
+### TON Storage Implementation
+
+```typescript
+class TONStorageManager {
+  async storeData(data: Uint8Array): Promise<StorageReceipt> {
+    // Split data into chunks for distributed storage
+    const chunks = this.splitIntoChunks(data);
+    
+    // Calculate Reed-Solomon encoding for redundancy
+    const encodedChunks = this.encodeWithRedundancy(chunks);
+    
+    // Distribute across TON storage network
+    const storagePromises = encodedChunks.map(chunk => 
+      this.ton.storage.store(chunk, {
+        redundancy: 3,
+        encryption: 'aes-256-gcm',
+        access: {
+          public: false,
+          allowedUsers: [task.owner]
+        }
+      })
+    );
+    
+    const results = await Promise.all(storagePromises);
+    return this.createStorageReceipt(results);
+  }
+}
+```
+
+## 3.3 Proof of Computation System
+
+### Mathematical Model
+
+The Proof of Computation (PoC) system uses a zero-knowledge proof construction:
+
+$$\pi = Proof\{(x, w): C(x, w) = 1\}$$
+
+Where:
+- $x$ is the public input (task specification)
+- $w$ is the witness (computation results)
+- $C$ is the verification circuit
+
+The verification equation:
+
+$$e(g^{\alpha}, h^{\beta}) \cdot e(g^x, h^w) = e(g^{\pi}, h)$$
+
+Implementation in code:
+
+```typescript
+class ProofOfComputation {
+  async generateProof(
+    task: ComputeTask, 
+    result: ComputeResult
+  ): Promise<ZKProof> {
+    const circuit = await this.buildCircuit(task.specification);
+    const witness = this.prepareWitness(result);
+    
+    // Generate zero-knowledge proof
+    const proof = await snarkjs.groth16.prove(circuit, witness);
+    
+    // Verify proof locally before submission
+    const verified = await this.verifyProof(proof, task.publicInputs);
+    if (!verified) throw new Error('Proof generation failed');
+    
+    return {
+      proof,
+      publicInputs: task.publicInputs,
+      taskId: task.id
+    };
+  }
+}
+```
+
+
