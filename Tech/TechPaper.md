@@ -590,3 +590,261 @@ class PerformanceBenchmark {
   }
 }
 ```
+
+# 6. Integration Framework
+
+## 6.1 Telegram WebApp Integration
+
+```mermaid
+graph TB
+    subgraph Telegram Layer
+        A[Telegram Client] --> B[WebApp API]
+        B --> C[TWA Bridge]
+    end
+    
+    subgraph Neurolov Layer
+        D[Auth Service] --> E[Resource Manager]
+        E --> F[Compute Engine]
+        F --> G[Reward System]
+    end
+    
+    C --> D
+    G --> C
+```
+
+### WebApp Implementation
+
+```typescript
+class TelegramIntegration {
+  private webApp: WebApp;
+  private bridge: TWABridge;
+
+  async initialize(): Promise<void> {
+    this.webApp = await Telegram.WebApp.create({
+      initData: window.Telegram.WebApp.initData,
+      initParams: {
+        gpu_access: true,
+        payment_support: true
+      }
+    });
+
+    this.bridge = new TWABridge({
+      webApp: this.webApp,
+      handlers: {
+        onGPUAccess: this.handleGPUAccess.bind(this),
+        onPayment: this.handlePayment.bind(this),
+        onError: this.handleError.bind(this)
+      }
+    });
+  }
+
+  async handleGPUAccess(request: GPUAccessRequest): Promise<void> {
+    const capabilities = await this.detectGPUCapabilities();
+    if (!capabilities.isCompatible) {
+      throw new Error('WebGPU not supported');
+    }
+
+    await this.registerNode({
+      userId: request.userId,
+      capabilities,
+      stake: request.stake
+    });
+
+    this.webApp.sendData({
+      type: 'gpu_access_confirmed',
+      nodeId: this.nodeId,
+      capabilities
+    });
+  }
+}
+```
+
+## 6.2 Payment System Integration
+
+### TON Payments Protocol
+
+```solidity
+contract PaymentProcessor {
+    struct PaymentChannel {
+        address sender;
+        address receiver;
+        uint256 deposit;
+        uint256 usedAmount;
+        uint256 expiration;
+        bool isActive;
+    }
+
+    mapping(bytes32 => PaymentChannel) public channels;
+
+    event ChannelOpened(bytes32 indexed channelId, address sender, address receiver);
+    event PaymentProcessed(bytes32 indexed channelId, uint256 amount);
+    event ChannelClosed(bytes32 indexed channelId, uint256 finalAmount);
+
+    function openChannel(
+        address receiver,
+        uint256 expiration
+    ) external payable returns (bytes32) {
+        require(msg.value > 0, "Deposit required");
+        require(expiration > block.timestamp, "Invalid expiration");
+
+        bytes32 channelId = keccak256(
+            abi.encodePacked(
+                msg.sender,
+                receiver,
+                block.timestamp
+            )
+        );
+
+        channels[channelId] = PaymentChannel({
+            sender: msg.sender,
+            receiver: receiver,
+            deposit: msg.value,
+            usedAmount: 0,
+            expiration: expiration,
+            isActive: true
+        });
+
+        emit ChannelOpened(channelId, msg.sender, receiver);
+        return channelId;
+    }
+
+    function processPayment(
+        bytes32 channelId,
+        uint256 amount,
+        bytes memory signature
+    ) external {
+        PaymentChannel storage channel = channels[channelId];
+        require(channel.isActive, "Channel not active");
+        require(block.timestamp < channel.expiration, "Channel expired");
+        
+        bytes32 messageHash = keccak256(
+            abi.encodePacked(channelId, amount)
+        );
+        address signer = recoverSigner(messageHash, signature);
+        require(signer == channel.sender, "Invalid signature");
+
+        require(amount <= channel.deposit, "Insufficient funds");
+        
+        channel.usedAmount = amount;
+        emit PaymentProcessed(channelId, amount);
+    }
+}
+```
+
+## 6.3 Cross-Chain State Management 
+
+```typescript
+interface StateManager {
+  async syncState(
+    sourceChain: Chain,
+    targetChain: Chain,
+    state: StateUpdate
+  ): Promise<SyncResult> {
+    // Generate merkle proof for state update
+    const proof = await this.generateMerkleProof(state);
+    
+    // Submit state update to target chain
+    const submission = await this.submitStateUpdate(
+      targetChain,
+      state,
+      proof
+    );
+
+    // Verify state sync
+    await this.verifyStateSync(submission);
+
+    // Update local state cache
+    await this.updateStateCache(state);
+
+    return {
+      sourceBlock: state.blockNumber,
+      targetBlock: submission.blockNumber,
+      proof,
+      status: 'completed'
+    };
+  }
+}
+```
+
+# 7. Technical Implementation Details
+
+## 7.1 Node Registration Pipeline
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant WebGPU
+    participant Node Registry
+    participant Validator
+    participant Blockchain
+
+    User->>Browser: Initiate Registration
+    Browser->>WebGPU: Request Capabilities
+    WebGPU-->>Browser: GPU Specifications
+    Browser->>Node Registry: Submit Registration
+    Node Registry->>Validator: Validate Capabilities
+    Validator->>WebGPU: Run Benchmarks
+    WebGPU-->>Validator: Performance Metrics
+    Validator->>Blockchain: Store Proof
+    Blockchain-->>Node Registry: Confirmation
+    Node Registry-->>User: Registration Complete
+```
+
+## 7.2 Task Execution Pipeline
+
+```typescript
+class TaskExecutionPipeline {
+  private executor: TaskExecutor;
+  private validator: ResultValidator;
+  private rewarder: RewardDistributor;
+
+  async executeTask(task: ComputeTask): Promise<ExecutionResult> {
+    try {
+      // Initialize compute environment
+      await this.executor.initialize(task.requirements);
+
+      // Split task into subtasks
+      const subtasks = await this.executor.partitionTask(task);
+
+      // Execute subtasks in parallel
+      const results = await Promise.all(
+        subtasks.map(subtask => 
+          this.executor.executeSubtask(subtask)
+        )
+      );
+
+      // Validate results
+      const validatedResults = await this.validator.validateResults(
+        results,
+        task.validationCriteria
+      );
+
+      // Generate proof of computation
+      const proof = await this.validator.generateProof(
+        validatedResults,
+        task.specification
+      );
+
+      // Distribute rewards
+      await this.rewarder.distributeRewards({
+        task,
+        results: validatedResults,
+        proof
+      });
+
+      return {
+        status: 'completed',
+        results: validatedResults,
+        proof,
+        metrics: this.executor.getMetrics()
+      };
+
+    } catch (error) {
+      await this.handleExecutionError(error, task);
+      throw error;
+    }
+  }
+}
+```
+
