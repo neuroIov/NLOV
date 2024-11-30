@@ -270,6 +270,14 @@ graph TB
         H -->|Resources Free| B
     end
 ```
+The resource allocation flow diagram shows:
+
+- Task submission evaluation
+- Resource availability checking
+- Queue management for limited resources
+- Wait pool handling for resource scarcity
+
+The ResourceAllocator class implements sophisticated scoring algorithms for optimal resource distribution across the network.
 
 ### Resource Allocation Algorithm
 
@@ -314,6 +322,15 @@ class ResourceAllocator {
 ```
 
 ## 3.2 TON Network Integration
+
+The task distribution system is implemented in Open Network for:
+
+- Efficient message creation and routing
+- Cross-chain communication protocols
+- Distributed storage management with redundancy
+- Secure data handling with encryption
+
+The CrossChainBridge contract enables seamless interaction between different blockchain networks while maintaining security and consistency.
 
 ### Task Distribution System
 
@@ -415,6 +432,13 @@ Where:
 The verification equation:
 
 $$e(g^{\alpha}, h^{\beta}) \cdot e(g^x, h^w) = e(g^{\pi}, h)$$
+
+The ProofOfComputation class implements this with:
+
+- Circuit building for specific tasks
+- Witness preparation from results
+- Zero-knowledge proof generation
+- Local verification before submission
 
 Implementation in code:
 
