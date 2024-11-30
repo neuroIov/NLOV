@@ -138,6 +138,15 @@ class WebGPUManager {
 
 ## 2.3 Blockchain Integration
 
+The Solana smart contract code demonstrates a robust node registration system. The neurolov_node_registry program manages the secure onboarding of GPU nodes, with key features including:
+
+- Zero-knowledge proof verification of node capabilities
+- On-chain reputation tracking
+- Stake requirement verification
+- Comprehensive event logging for transparency
+
+The contract's modular structure ensures secure node management while maintaining efficiency through Solana's high-speed execution.
+
 ### Solana Smart Contract for Node Registration
 
 ```solidity
@@ -187,6 +196,14 @@ pub struct RegisterNode<'info> {
 ```
 
 ## 2.4 Network Topology
+
+The platform poses a three-tier network architecture:
+
+- Edge Layer: Contains individual compute nodes (E1, E2, E3) providing direct GPU resources
+- Distribution Layer: Manages hubs (D1, D2) that coordinate resource allocation
+- Core Layer: Houses primary routers (C1, C2) for network control and management
+
+This hierarchical structure enables efficient task distribution and load balancing across the network.
 
 ```mermaid
 graph TB
