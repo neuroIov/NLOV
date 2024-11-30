@@ -469,7 +469,20 @@ class ProofOfComputation {
 
 # 4. Security Architecture
 
+Neurolov's security architecture implements a comprehensive approach that safeguards every aspect of the platform's operations. At its core, the system utilizes multiple interconnected security layers that work in harmony to protect both user data and computational resources. This architecture is designed not just for current threats, but also to be adaptable to emerging security challenges in the distributed computing landscape.
+
+The system employs advanced cryptographic protocols throughout its operations, ranging from basic data transmission to complex computational task verification. What makes this architecture particularly robust is its ability to maintain high security standards without significantly impacting system performance or user accessibility. Each security measure is carefully balanced against its computational overhead to ensure optimal platform 
+
 ## 4.1 Multi-Layer Security Model
+
+The heart of Neurolov's security infrastructure lies in its multi-layer security model. At the topmost level, network security serves as the primary defense mechanism, controlling access to the infrastructure and managing network-level protocols. This layer acts as the first line of defense against external threats while ensuring smooth communication between different parts of the system.
+Building upon this foundation, the node validation layer leverages zero-knowledge proofs to verify the authenticity and capabilities of participating nodes. This layer maintains a sophisticated reputation system that tracks node reliability and performance over time, ensuring that only trustworthy nodes participate in sensitive computations.
+
+Data protection forms another crucial layer of the security model, implementing end-to-end encryption for all data transfers within the network. This layer utilizes secure enclaves for particularly sensitive computations, ensuring that data privacy is maintained even during processing. The implementation of these secure enclaves is particularly noteworthy as it allows for confidential computing without compromising on performance.
+
+The final layer focuses on smart contract security, utilizing multi-signature requirements and time-locks for critical operations. This layer is essential for maintaining the integrity of platform governance and ensuring secure state transitions in all blockchain-related operations. The smart contract security layer also includes automated audit mechanisms that continuously monitor for potential vulnerabilities or irregular patterns.
+
+Together, these security layers create a robust defense system that protects against both external attacks and internal vulnerabilities, while maintaining the flexibility needed for future security enhancements and adaptations.
 
 ```mermaid
 graph TB
@@ -531,6 +544,8 @@ class NodeValidator {
 ```
 
 ## 4.2 Security Protocol Specifications
+
+The platform employs advanced encryption protocols designed specifically for distributed computing environments. The encryption system uses a sophisticated key derivation function based on PBKDF2 with SHA-256 hashing, utilizing 100,000 iterations for maximum security. For task data encryption, the system implements AES-GCM with ephemeral key pairs, ensuring perfect forward secrecy for all compute operations. A notable feature is the automatic key rotation mechanism that refreshes encryption keys based on both time intervals and data volume thresholds.
 
 ### Encryption Protocol
 
@@ -601,6 +616,8 @@ Where:
 
 ## 5.2 Benchmark Implementation
 
+The benchmarking system provides comprehensive performance testing across three critical areas. First, it evaluates computation performance through rigorous testing with varying data sizes and parallel processing capabilities. Network performance testing examines different packet sizes and protocols across the active node network. Storage performance testing focuses on read/write operations with various data sizes and redundancy levels. The system automatically aggregates these metrics to provide detailed performance insights and optimization recommendations.
+
 ```typescript
 class PerformanceBenchmark {
   async runBenchmark(): Promise<BenchmarkResults> {
@@ -638,7 +655,11 @@ class PerformanceBenchmark {
 
 # 6. Integration Framework
 
+The integration framework represents Neurolov's approach to seamlessly connecting various system components. This framework provides standardized interfaces for connecting external systems, handling data flow between different parts of the platform, and managing cross-chain interactions. The architecture emphasizes modularity and flexibility, allowing for easy addition of new features and integration with external services.
+
 ## 6.1 Telegram WebApp Integration
+
+The Telegram integration layer provides a seamless connection between the Neurolov platform and Telegram's ecosystem. This integration is structured in two main layers: the Telegram Layer, which handles direct user interactions and API communications, and the Neurolov Layer, which manages resource allocation and compute operations. The bridge between these layers ensures secure and efficient data transfer while maintaining the user-friendly nature of Telegram's interface.
 
 ```mermaid
 graph TB
@@ -705,6 +726,8 @@ class TelegramIntegration {
 ```
 
 ## 6.2 Payment System Integration
+
+The payment system integration features a sophisticated payment channel implementation that supports both immediate and scheduled transactions. This system handles multiple payment scenarios, from simple compute resource payments to complex cross-chain transactions. Payment channels are designed with automatic dispute resolution mechanisms and support for partial payments, making them ideal for continuous compute resource usage scenarios.
 
 ### TON Payments Protocol
 
@@ -776,7 +799,9 @@ contract PaymentProcessor {
 }
 ```
 
-## 6.3 Cross-Chain State Management 
+## 6.3 Cross-Chain State Management
+
+The cross-chain state management system ensures consistent state synchronization across different blockchain networks. It implements a merkle-proof based verification system for state updates, ensuring that state transitions are verifiable and secure. The system includes automatic conflict resolution mechanisms and handles state rollbacks when necessary. This component is crucial for maintaining consistency across the platform's multi-chain architecture while ensuring transaction finality and state validity.
 
 ```typescript
 interface StateManager {
