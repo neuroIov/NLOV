@@ -36,7 +36,11 @@ graph TB
     G --> I
 ```
 
+The high-level architecture demonstrates Neurolov's three-tier distributed system. At the top, the Client Layer handles user interactions through WebGPU browsers and Telegram clients. The Blockchain Layer manages core platform operations using Solana for token transactions and TON for messaging/storage. The bottom Compute Layer orchestrates GPU resources and task scheduling, forming the backbone of the processing network.
+
 ## 2.2 WebGPU Implementation
+
+The WebGPUManager class provides sophisticated GPU resource management. It initializes the GPU device with specific capability requirements like timestamp queries and pipeline statistics. The class handles compute pipeline creation with shader modules and automatic layout determination. The executeComputation method efficiently manages buffer creation, bind group setup, and command encoding for parallel processing.
 
 ```typescript
 class WebGPUManager {
@@ -790,8 +794,11 @@ sequenceDiagram
     Blockchain-->>Node Registry: Confirmation
     Node Registry-->>User: Registration Complete
 ```
+The sequence diagram outlines the secure node onboarding process, starting with user initiation through browser capability detection. The Node Registry validates capabilities through the Validator service, which runs benchmarks and generates proofs. Final registration is recorded on-chain with
 
 ## 7.2 Task Execution Pipeline
+
+The TaskExecutionPipeline implements parallel computation management. It partitions incoming tasks into optimally-sized subtasks, distributes them across available nodes, validates results using the proof of computation protocol, and handles reward distribution. The system includes comprehensive error handling and performance metrics collection
 
 ```typescript
 class TaskExecutionPipeline {
@@ -853,6 +860,9 @@ Based on the extensive project documentation, I'll continue the technical whitep
 
 ## 8.1 Scaling Architecture
 
+
+The NetworkExpansion interface defines the staged growth of Neurolov's compute network. The primary region targets 5000 nodes delivering 250,000 TFLOPS with specific geographical distribution across Asia (35%), Europe (30%), Americas (25%), and other regions (10%). The secondary expansion phase aims for 15,000 nodes with 750,000 TFLOPS global coverage.
+
 ### Multi-Region Network Expansion
 ```typescript
 interface NetworkExpansion {
@@ -877,6 +887,7 @@ interface NetworkExpansion {
   }
 }
 ```
+The three-layer diagram shows the interaction between Solana Layer-1 for core settlement and two Layer-2 networks: Compute L2 for task coordination and Data L2 for storage. This enables efficient task distribution while maintaining security through the base layer.
 
 ### Layer-2 Optimization Strategy
 ```mermaid
@@ -905,6 +916,9 @@ graph TB
 ```
 
 ## 8.2 Advanced AI Integration
+
+
+The AIModelFramework interface outlines distributed training capabilities including Parameter Server and Ring AllReduce strategies. It specifies hardware requirements (8GB GPU memory minimum, CUDA 8.0+) and deployment features like real-time inference and automated scaling
 
 ### AI Model Training Framework
 ```typescript
@@ -978,6 +992,8 @@ interface AGIResearch {
 
 ## 8.4 Protocol Upgrade Pathway
 
+The upgrade pathway mermaid diagram shows the platform's technical evolution across three versions. V1.0 represents the current WebGPU implementation, V2.0 introduces quantum-ready capabilities, and V3.0 establishes AGI integration architecture.
+
 ### Version 2.0 Specification
 ```mermaid
 graph TB
@@ -1036,6 +1052,8 @@ interface ProtocolV2 {
 
 ## 8.5 Network Evolution Plan
 
+The ScalingPlan interface defines three development phases through 2025, with specific node counts and performance targets. Each phase includes feature deployments like Enhanced WebGPU (Phase 1), Cross-chain Bridge (Phase 2), and Quantum Readiness (Phase 3).
+
 ### Infrastructure Scaling Phases
 ```typescript
 interface ScalingPlan {
@@ -1070,6 +1088,9 @@ interface ScalingPlan {
 ```
 
 ## 9. Technical Specifications for Future Features
+
+
+The NeuralEngine interface describes a hybrid neural-symbolic architecture with multi-modal input processing, causal inference, and action generation layers. It supports distributed deployment with N+2 redundancy and automatic failover mechanisms.
 
 ### Neural Processing Engine
 ```typescript
@@ -1108,6 +1129,7 @@ For detailed implementation specifics, API documentation, and development guidel
 ## Appendix A: WebGPU Implementation Specifications
 
 ### A.1 GPU Core Requirements
+Detailed specifications for GPU requirements and pipeline configurations, including shader compilation optimization and buffer management strategies.
 
 ```typescript
 interface GPURequirements {
@@ -1151,6 +1173,7 @@ interface PipelineConfig {
 ```
 
 ## Appendix B: Network Protocol Specifications
+Node discovery and communication protocols using DHT-based methods with Protocol Buffer messaging and Kademlia routing.
 
 ### B.1 Node Communication Protocol
 
@@ -1193,6 +1216,7 @@ sequenceDiagram
 ```
 
 ## Appendix C: Security Implementation Guide
+Comprehensive encryption standards for asymmetric (Ed25519) and symmetric (AES-GCM) encryption with secure channel establishment procedures.
 
 ### C.1 Encryption Standards
 
@@ -1243,6 +1267,7 @@ class SecurityProtocol {
 ```
 
 ## Appendix D: Performance Optimization Guide
+Task optimization parameters for compute, network, and storage operations with specific monitoring metrics and thresholds.
 
 ### D.1 Task Optimization Parameters
 
@@ -1302,6 +1327,7 @@ interface MonitoringPoints {
 ```
 
 ## Appendix E: API Reference
+Core API endpoint specifications for compute task management, node operations, and marketplace interactions.
 
 ### E.1 Core API Endpoints
 
@@ -1363,6 +1389,8 @@ interface WebSocketEvents {
 
 ## Appendix F: Development Tools & SDKs
 
+SDK components and development environment setup requirements including Node.js, Rust, and Solana CLI configurations.
+
 ### F.1 SDK Components
 
 ```typescript
@@ -1409,6 +1437,7 @@ neurolov deploy --network mainnet
 ```
 
 ## Appendix G: Upgrade & Migration Procedures
+Detailed protocols for node upgrades and smart contract migrations with rollback capabilities.
 
 ### G.1 Node Upgrade Protocol
 
