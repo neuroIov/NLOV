@@ -1,6 +1,6 @@
-# 9. Tokenomics
+# 6. Tokenomics
 
-## 9.1 Token Overview
+## 6.1 Token Overview
 
 The NLOV token is the cornerstone of the Neurolov ecosystem, designed to facilitate seamless transactions, incentivize participation, and govern the platform's development. As a utility token built on the Solana blockchain, NLOV enables efficient resource allocation and rewards distribution while ensuring the sustainable growth of the ecosystem.
 
@@ -11,7 +11,7 @@ The NLOV token is the cornerstone of the Neurolov ecosystem, designed to facilit
 - Total Supply: 500,000,000 (Fixed)
 - Decimals: 9
 
-## 9.2 Token Distribution & Allocation
+## 6.2 Token Distribution & Allocation
 
 The total supply of 500 million NLOV tokens is allocated strategically to ensure long-term sustainability and balanced growth of the ecosystem:
 
@@ -38,7 +38,7 @@ The total supply of 500 million NLOV tokens is allocated strategically to ensure
    - Partnerships: 5% (25M tokens)
    - Marketing: 3% (15M tokens)
 
-## 9.3 Token Sale Structure
+## 6.3 Token Sale Structure
 
 ### Sale Rounds:
 
@@ -72,7 +72,7 @@ The total supply of 500 million NLOV tokens is allocated strategically to ensure
 
 Total Raise: $4,300,000
 
-## 9.4 Vesting & Emission Schedule
+## 6.4 Vesting & Emission Schedule
 
 ### Core Vesting Schedules:
 
@@ -101,7 +101,7 @@ Total Raise: $4,300,000
 - First Year Emission: ~25% of total supply
 - Full Emission: 48 months
 
-## 9.5 Token Utility & Governance
+## 6.5 Token Utility & Governance
 
 ### Core Utilities:
 1. **Platform Access:**
@@ -126,7 +126,7 @@ Total Raise: $4,300,000
 - Quorum Requirement: 10% of circulating supply
 - Approval Threshold: 66% majority
 
-## 9.6 Staking & Rewards
+## 6.6 Staking & Rewards
 
 ### Staking Tiers:
 1. **Bronze Tier:**
@@ -155,7 +155,7 @@ Total Raise: $4,300,000
 - Quality Score Impact: ±20% based on service quality
 - Additional Bonuses: Volume-based multipliers
 
-## 9.7 Economic Sustainability
+## 6.7 Economic Sustainability
 
 ### Token Value Protection:
 1. **Burn Mechanism:**
@@ -180,7 +180,7 @@ Total Raise: $4,300,000
 - Strategic Investments: 10%
 - Emergency Reserve: 10%
 
-## 9.8 Future Token Utility Expansion
+## 6.8 Future Token Utility Expansion
 
 1. **Planned Features:**
    - Cross-chain bridges
