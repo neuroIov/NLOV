@@ -2,12 +2,6 @@
 
 Neurolov implements a novel browser-based distributed computing protocol utilizing WebGPU for direct GPU access, dual-chain architecture (Solana + TON) for efficient compute task distribution, and zero-knowledge proofs for computation verification. Current implementation achieves 85,000 TFLOPS across 170 nodes with 99.99% uptime.
 
-## Core Technical Metrics:
-- Compute Throughput: 85,000 TFLOPS
-- Average Latency: 50ms
-- Network Efficiency: 78%
-- Node Validation Time: <2s
-- Task Distribution Overhead: <100ms
 
 # 2. System Architecture
 
